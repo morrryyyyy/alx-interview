@@ -1,28 +1,35 @@
 #!/usr/bin/python3
 """
-Implemented using graph and a deep search algorithm
+This module contains the canUnlockAll function, which checks
+if all boxes can be unlocked using a depth-first search approach.
 """
-
 
 def canUnlockAll(boxes):
     """
-    You have n number of locked boxes in front of you. Each box is
-    numbered sequentially from
-    0 to n - 1 and each box may contain keys to the other boxes.
-    """
-    opened = set()
-    key_box = {}
-    idx = 0
-    for box in boxes:
-        key_box[str(idx)] = box
-        idx += 1
+    Determines if all the boxes can be unlocked.
 
-    stack = [0]
-    while len(stack) > 0:
-        current = stack.pop()
-        opened.add(current)
-        for key in key_box[str(current)]:
-            if key in opened:
-                continue
-            stack.append(key)
+    Args:
+        boxes (list of list of int): A list where each element is a list
+        containing keys to other boxes.
+
+    Returns:
+        bool: True if all boxes can be unlocked, otherwise False.
+    """
+    if not boxes or not isinstance(boxes, list):
+        return False
+    
+    # Track which boxes have been opened
+    opened = set([0])
+    stack = [0]  # Start with the first box (box 0)
+
+    # Depth-First Search (DFS) using a stack
+    while stack:
+        current_box = stack.pop()
+
+        for key in boxes[current_box]:
+            if key not in opened and 0 <= key < len(boxes):
+                opened.add(key)
+                stack.append(key)
+
+    # If the number of opened boxes is equal to the total number of boxes, return True
     return len(opened) == len(boxes)
