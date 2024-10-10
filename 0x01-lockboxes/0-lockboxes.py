@@ -4,6 +4,7 @@ This module contains the canUnlockAll function, which checks
 if all boxes can be unlocked using a depth-first search approach.
 """
 
+
 def canUnlockAll(boxes):
     """
     Determines if all the boxes can be unlocked.
@@ -17,7 +18,7 @@ def canUnlockAll(boxes):
     """
     if not boxes or not isinstance(boxes, list):
         return False
-    
+
     # Track which boxes have been opened
     opened = set([0])
     stack = [0]  # Start with the first box (box 0)
@@ -31,5 +32,6 @@ def canUnlockAll(boxes):
                 opened.add(key)
                 stack.append(key)
 
-    # If the number of opened boxes is equal to the total number of boxes, return True
+# If the number of opened boxes is equal to the
+# total number of boxes, return True
     return len(opened) == len(boxes)
